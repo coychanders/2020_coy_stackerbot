@@ -25,6 +25,8 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 	private Boolean mClawOpen;
 
+	private Boolean mNewCommand;
+
 
 	public TeleopModeLogic(InputValues inputValues, RobotConfiguration robotConfiguration) {
 		super(inputValues, robotConfiguration);
@@ -35,8 +37,8 @@ public class TeleopModeLogic extends AbstractModeLogic {
 		sLogger.info("***** TELEOP *****");
 
 		mCurrentlyFront = true;
-		mCurrentlyOut = false;
-		mCurrentHeight = 2;
+		mCurrentlyOut = true;
+		mCurrentHeight = 1;
 
 		mRequestedFront = true;
 		mRequestedOut = false;
@@ -47,49 +49,60 @@ public class TeleopModeLogic extends AbstractModeLogic {
 		fSharedInputValues.setBoolean("ipb_arm_front", mCurrentlyFront);
 		fSharedInputValues.setBoolean("ipb_arm_out", mCurrentlyOut);
 		fSharedInputValues.setNumeric("ipb_elevator_height", mCurrentHeight);
+
+		mNewCommand = false;
 	}
 
 	@Override
 	public void update() {
 
+		mNewCommand = false;
+
 		mCurrentlyFront = fSharedInputValues.getBoolean("ipb_arm_front");
 		mCurrentlyOut =  fSharedInputValues.getBoolean("ipb_arm_out");
-		mCurrentHeight = (int)fSharedInputValues.getNumeric("ipn_elevator_height");
+		mCurrentHeight = (int)fSharedInputValues.getNumeric("ipn_elevator_position");
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_trigger")) {
 			mRequestedFront = true;
 			mRequestedOut = true;
 			mRequestedHeight = 2;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_right_bumper")) {
 			mRequestedFront = true;
 			mRequestedOut = false;
-			mCurrentHeight = 2;
+			mRequestedHeight = 2;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_trigger")) {
 			mRequestedFront = false;
 			mRequestedOut = true;
 			mRequestedHeight = 2;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_left_bumper")) {
 			mRequestedFront = false;
 			mRequestedOut = false;
 			mRequestedHeight = 2;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_dpad_up")) {
-			mRequestedHeight = (mCurrentHeight >= 6) ? 6 : mCurrentHeight++;
+			mRequestedHeight = (mRequestedHeight >= 6) ? 6 : ++mRequestedHeight;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_operator_dpad_down")) {
-			mRequestedHeight = (mCurrentHeight <= 1) ? 1 : mCurrentHeight--;
+			mRequestedHeight = (mRequestedHeight <= 1) ? 1 : --mRequestedHeight;
+			mNewCommand = true;
 		}
 
 		if(fSharedInputValues.getBooleanRisingEdge("ipb_driver_right_trigger")){
 			mClawOpen = !mClawOpen;
+			mNewCommand = true;
 		}
 
 	}
@@ -111,28 +124,56 @@ public class TeleopModeLogic extends AbstractModeLogic {
 
 			// Starting from the front
 			case "sq_front_out_front":
-				return mCurrentlyFront && mRequestedFront && mRequestedOut;
+				return mNewCommand && mCurrentlyFront && mRequestedFront && mRequestedOut && mRequestedHeight == 2;
 			case "sq_front_protect_front":
-				return mCurrentlyFront && mRequestedFront && !mRequestedOut;
+				return mNewCommand && mCurrentlyFront && mRequestedFront && !mRequestedOut && mRequestedHeight == 2;
 			case "sq_front_protect_back":
-				return mCurrentlyFront && !mRequestedFront && !mRequestedOut;
+				return mNewCommand && mCurrentlyFront && !mRequestedFront && !mRequestedOut && mRequestedHeight == 2;
 			case "sq_front_out_back":
-				return mCurrentlyFront && !mRequestedFront && mRequestedOut;
+				return mNewCommand && mCurrentlyFront && !mRequestedFront && mRequestedOut && mRequestedHeight == 2;
 
 			// Starting from the back
 			case "sq_back_out_back":
-				return !mCurrentlyFront && !mRequestedFront && mRequestedOut;
+				return mNewCommand && !mCurrentlyFront && !mRequestedFront && mRequestedOut && mRequestedHeight == 2;
 			case "sq_back_protect_back":
-				return !mCurrentlyFront && !mRequestedFront && !mRequestedOut;
+				return mNewCommand && !mCurrentlyFront && !mRequestedFront && !mRequestedOut && mRequestedHeight == 2;
 			case "sq_back_protect_front":
-				return !mCurrentlyFront && mRequestedFront && !mRequestedOut;
+				return mNewCommand && !mCurrentlyFront && mRequestedFront && !mRequestedOut && mRequestedHeight == 2;
 			case "sq_back_out_front":
-				return !mCurrentlyFront && mRequestedFront && mRequestedOut;
+				return mNewCommand && !mCurrentlyFront && mRequestedFront && mRequestedOut && mRequestedHeight == 2;
+
+			// Change heights when out front
+			case "sq_front_h1_out_front":
+				return mNewCommand && mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 1;
+//			case "sq_front_h2_out_front":
+//				return mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 2;
+			case "sq_front_h3_out_front":
+				return mNewCommand && mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 3;
+			case "sq_front_h4_out_front":
+				return mNewCommand && mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 4;
+			case "sq_front_h5_out_front":
+				return mNewCommand && mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 5;
+			case "sq_front_h6_out_front":
+				return mNewCommand && mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 6;
+
+			// Change heights when out back
+			case "sq_back_h1_out_back":
+				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 1;
+//			case "sq_back_h2_out_back":
+//				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 2;
+			case "sq_back_h3_out_back":
+				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 3;
+			case "sq_back_h4_out_back":
+				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 4;
+			case "sq_back_h5_out_back":
+				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 5;
+			case "sq_back_h6_out_back":
+				return mNewCommand && !mCurrentlyFront && mCurrentlyOut && mRequestedHeight == 6;
 
 			case "st_claw_open":
-				return mClawOpen;
+				return mNewCommand && mClawOpen;
 			case "st_claw_closed":
-				return !mClawOpen;
+				return mNewCommand && !mClawOpen;
 
 			default:
 				return false;
@@ -142,7 +183,7 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isDone(String name, State state) {
 		switch (name) {
-
+/*
 			// Starting from the front
 			case "sq_front_out_front":
 				return !mCurrentlyFront && !mRequestedFront && !mRequestedOut;
@@ -162,6 +203,35 @@ public class TeleopModeLogic extends AbstractModeLogic {
 				return mCurrentlyFront && !mRequestedFront && !mRequestedOut;
 			case "sq_back_out_front":
 				return mCurrentlyFront && !mRequestedFront && mRequestedOut;
+
+			// Changing heights when out front
+			case "sq_front_h1_out_front":
+				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 1);
+//			case "sq_front_h2_out_front":
+//				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 2);
+			case "sq_front_h3_out_front":
+				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 3);
+			case "sq_front_h4_out_front":
+				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 4);
+			case "sq_front_h5_out_front":
+				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 5);
+			case "sq_front_h6_out_front":
+				return !mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 6);
+
+			// Change heights when out back
+			case "sq_back_h1_out_back":
+				return mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 1);
+//			case "sq_back_h2_out_back":
+//				return mCurrentlyFront || !mCurrentlyOut && !(mRequestedHeight == 2);
+			case "sq_back_h3_out_back":
+				return mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 3);
+			case "sq_back_h4_out_back":
+				return mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 4);
+			case "sq_back_h5_out_back":
+				return mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 5);
+			case "sq_back_h6_out_back":
+				return mCurrentlyFront || !mCurrentlyOut || !(mRequestedHeight == 6);
+*/
 
 			default:
 				return state.isDone();

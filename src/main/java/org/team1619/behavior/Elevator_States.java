@@ -59,8 +59,8 @@ public class Elevator_States implements Behavior {
 	@Override
 	public boolean isDone() {
 		if(fTimer.isDone()){
-			fSharedInputValues.setNumeric("ipn_elevator_position", elevatorHeight);
-			fSharedInputValues.setNumeric("ipn_elevator_height", elevatorHeight.intValue() +1);
+			fSharedInputValues.setNumeric("ipn_elevator_height", elevatorHeight);
+			fSharedInputValues.setNumeric("ipn_elevator_position", elevatorHeight.intValue() +1);
 			return true;
 		};
 		return false;

@@ -6,7 +6,9 @@ general:
 
     sequences:
       priority_level_1: [sq_front_out_front, sq_front_protect_front, sq_front_protect_back, sq_front_out_back,
-                        sq_back_out_back, sq_back_protect_back, sq_back_protect_front, sq_back_out_front ]
+                         sq_back_out_back, sq_back_protect_back, sq_back_protect_front, sq_back_out_front,
+                         sq_front_h1_out_front, sq_front_h2_out_front, sq_front_h3_out_front, sq_front_h4_out_front, sq_front_h5_out_front, sq_front_h6_out_front,
+                         sq_back_h1_out_back, sq_back_h2_out_back, sq_back_h3_out_back, sq_back_h4_out_back, sq_back_h5_out_back, sq_back_h6_out_back]
     parallels:
        priority_level_1: []
     ss_drivetrain:

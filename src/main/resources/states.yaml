@@ -119,7 +119,7 @@ sequencer_state:
   sq_back_protect_front:
     sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2]
   sq_back_out_front:
-    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2, st_arm_protect_front]
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2, st_arm_out_front]
 
   # When starting out in front and changing the height
   sq_front_h1_out_front:
