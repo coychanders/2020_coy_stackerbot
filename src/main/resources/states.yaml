@@ -1,15 +1,91 @@
 single_state:
 
-# ------ Example ------
+# ------ Drivetrain ------
 
-  st_example:
-    behavior: bh_example
-    behavior_config:
-      config_key: 1000
+  st_drivetrain_zero:
+    behavior: bh_drivetrain_zero
 
-  st_example_default:
-    behavior: bh_example
+  st_drivetrain_percent:
+    behavior: bh_drivetrain_percent
+
+# ------ Arm ------
+
+  st_arm_zero:
+    behavior: bh_arm_zero
+
+  st_arm_out_front:
+    behavior: bh_arm_states
     behavior_config:
+      arm_angle: 0.0
+
+  st_arm_protect_front:
+    behavior: bh_arm_states
+    behavior_config:
+      arm_angle: 45.0
+
+  st_arm_protect_back:
+    behavior: bh_arm_states
+    behavior_config:
+      arm_angle: 135.0
+
+  st_arm_out_back:
+    behavior: bh_arm_states
+    behavior_config:
+      arm_angle: 180.0
+
+
+  # ------ Elevator ------
+
+  st_elevator_zero:
+    behavior: bh_elevator_zero
+
+  st_elevator_height1:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 0.5
+      elevator_position: 1
+
+  st_elevator_height2:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 1.5
+      elevator_position: 2
+
+  st_elevator_height3:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 2.5
+      elevator_position: 3
+
+  st_elevator_height4:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 3.5
+      elevator_position: 6
+
+  st_elevator_height5:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 4.5
+      elevator_position: 5
+
+  st_elevator_height6:
+    behavior: bh_elevator_states
+    behavior_config:
+      elevator_height: 5.5
+      elevator_position: 5
+
+  # ------ Claw ------
+
+  st_claw_open:
+    behavior: bh_claw_states
+    behavior_config:
+      claw_open: true
+
+  st_claw_closed:
+    behavior: bh_claw_states
+    behavior_config:
+      claw_open: false
 
 
 done_for_time_state:
@@ -17,4 +93,88 @@ done_for_time_state:
 parallel_state:
 
 sequencer_state:
+
+#todo - why does this not work?
+#  #  Base sequences used in other sequences below
+#  sq_front_to_back:
+#    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back]
+#  sq_back_to_front:
+#    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front]
+
+  #  When starting in the front, go to the 4 default positions (operator left/right trigger/bumper)
+  sq_front_out_front:
+    sequence: [st_elevator_height2, st_arm_out_front]
+  sq_front_protect_front:
+    sequence: [st_elevator_height2, st_arm_protect_front]
+  sq_front_protect_back:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height2]
+  sq_front_out_back:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height2, st_arm_out_back]
+
+  # When starting in the back, go to the 4 default positions (operator left/right trigger/bumper)
+  sq_back_out_back:
+    sequence: [st_elevator_height2, st_arm_out_back]
+  sq_back_protect_back:
+    sequence: [st_elevator_height2, st_arm_protect_back]
+  sq_back_protect_front:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2]
+  sq_back_out_front:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2, st_arm_protect_front]
+
+  # When starting out in front and changing the height
+  sq_front_h1_out_front:
+    sequence: [st_elevator_height1]
+  sq_front_h2_out_front:
+    sequence: [st_elevator_height2]
+  sq_front_h3_out_front:
+    sequence: [st_elevator_height3]
+  sq_front_h4_out_front:
+    sequence: [st_elevator_height4]
+  sq_front_h5_out_front:
+    sequence: [st_elevator_height5]
+  sq_front_h6_out_front:
+    sequence: [st_elevator_height6]
+
+  #  When starting in protect in front, changing the height, and then going to out in back
+  sq_front_h1_out_back:
+    sequence: [sq_front_to_back, st_elevator_height1,  st_arm_out_front]
+  sq_front_h2_out_back:
+    sequence: [sq_front_to_back, st_elevator_height2,  st_arm_out_front]
+  sq_front_h3_out_back:
+    sequence: [sq_front_to_back, st_elevator_height3,  st_arm_out_front]
+  sq_front_h4_out_back:
+    sequence: [sq_front_to_back, st_elevator_height4,  st_arm_out_front]
+  sq_front_h5_out_back:
+    sequence: [sq_front_to_back, st_elevator_height5,  st_arm_out_front]
+  sq_front_h6_out_back:
+    sequence: [sq_front_to_back, st_elevator_height6,  st_arm_out_front]
+
+  # When starting out in back and changing the height
+  sq_back_h1_out_back:
+    sequence: [st_elevator_height1]
+  sq_back_h2_out_back:
+    sequence: [st_elevator_height2]
+  sq_back_h3_out_back:
+    sequence: [st_elevator_height3]
+  sq_back_h4_out_back:
+    sequence: [st_elevator_height4]
+  sq_back_h5_out_back:
+    sequence: [st_elevator_height5]
+  sq_back_h6_out_back:
+    sequence: [st_elevator_height6]
+
+  #  When starting in protect in back, changing the height, and then going to out in front
+  sq_back_h1_out_front:
+    sequence: [sq_back_to_front, st_elevator_height1,  st_arm_out_back]
+  sq_back_h2_out_front:
+    sequence: [sq_back_to_front, st_elevator_height2,  st_arm_out_back]
+  sq_back_h3_out_front:
+    sequence: [sq_back_to_front, st_elevator_height3,  st_arm_out_back]
+  sq_back_h4_out_front:
+    sequence: [sq_back_to_front, st_elevator_height4,  st_arm_out_back]
+  sq_back_h5_out_front:
+    sequence: [sq_back_to_front, st_elevator_height5,  st_arm_out_back]
+  sq_back_h6_out_front:
+    sequence: [sq_back_to_front, st_elevator_height6,  st_arm_out_back]
+
 

@@ -5,26 +5,37 @@ general:
   states:
 
     sequences:
-      priority_level_1: []
+      priority_level_1: [sq_front_out_front, sq_front_protect_front, sq_front_protect_back, sq_front_out_back,
+                        sq_back_out_back, sq_back_protect_back, sq_back_protect_front, sq_back_out_front ]
     parallels:
        priority_level_1: []
-    ss_example:
-      priority_level_2: []
-      priority_level_1: [st_example]
-      default: [st_example_default]
+    ss_drivetrain:
+      priority_level_2: [st_drivetrain_zero]
+      priority_level_1: [st_drivetrain_percent]
+    ss_arm:
+      priority_level_2: [st_arm_zero]
+      priority_level_1: [st_arm_out_front, st_arm_protect_front, st_arm_out_back, st_arm_protect_back ]
+    ss_claw:
+      priority_level_1: [st_claw_open, st_claw_closed]
+    ss_elevator:
+      priority_level_2: [st_elevator_zero]
+      priority_level_1: [st_elevator_height1, st_elevator_height2, st_elevator_height3, st_elevator_height4, st_elevator_height5, st_elevator_height6]
 
 
-  subsystems: [ss_example]
 
-  input_booleans: [ipb_operator_right_trigger, ipb_operator_left_trigger]
 
-  input_numerics: []
+  subsystems: [ss_drivetrain, ss_arm, ss_claw, ss_elevator]
+
+  input_booleans: [ipb_operator_left_trigger, ipb_operator_left_bumper, ipb_operator_right_trigger, ipb_operator_right_bumper, ipb_operator_dpad_up, ipb_operator_dpad_down,
+                   ipb_driver_right_trigger]
+
+  input_numerics: [ipn_operator_left_y, ipn_operator_right_y]
 
   input_vectors: []
 
-  output_numerics: []
+  output_numerics: [opn_arm, opn_elevator]
 
-  output_booleans: [opb_example]
+  output_booleans: [opb_claw]
 
 
 global_timing:
@@ -36,8 +47,8 @@ global_timing:
   frame_cycle_time_threshold_core_thread: 80
   frame_cycle_time_threshold_info_thread: 80
 
-global_example:
-  what_this_button_does: ipb_operator_left_trigger
+global_all:
+  zero_timeout: 1000
 
 log:
 #  ips_selected_auto: true
