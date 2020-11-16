@@ -94,13 +94,7 @@ parallel_state:
 
 sequencer_state:
 
-#todo - why does this not work?
-#  #  Base sequences used in other sequences below
-#  sq_front_to_back:
-#    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back]
-#  sq_back_to_front:
-#    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front]
-
+  # Protect actions - always uses height 2
   sq_front_to_h2_front_protect:
     sequence: [st_elevator_height2, st_arm_protect_front]
   sq_front_to_h2_back_protect:
@@ -110,8 +104,7 @@ sequencer_state:
   sq_back_to_h2_front_protect:
     sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2]
 
-
-
+  # Front to front out actions
   sq_front_to_h1_front_out:
     sequence: [st_elevator_height1, st_arm_out_front]
   sq_front_to_h2_front_out:
@@ -125,6 +118,7 @@ sequencer_state:
   sq_front_to_h6_front_out:
     sequence: [st_elevator_height6, st_arm_out_front]
 
+  # Front to back out actions
   sq_front_to_h1_back_out:
     sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height1, st_arm_out_back]
   sq_front_to_h2_back_out:
@@ -138,7 +132,7 @@ sequencer_state:
   sq_front_to_h6_back_out:
     sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height6, st_arm_out_back]
 
-
+  # Back to back out actions
   sq_back_to_h1_back_out:
     sequence: [st_elevator_height1, st_arm_out_back]
   sq_back_to_h2_back_out:
@@ -152,6 +146,7 @@ sequencer_state:
   sq_back_to_h6_back_out:
     sequence: [st_elevator_height6, st_arm_out_back]
 
+  # Back to front out actions
   sq_back_to_h1_front_out:
     sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height1, st_arm_out_front]
   sq_back_to_h2_front_out:
