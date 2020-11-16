@@ -38,15 +38,21 @@ public class Elevator_Zero implements Behavior {
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
+		fSharedOutputValues.setNumeric("opn_elevator", "percent", -0.1);
+
 		fTimer.start(fZero_Timeout);
 	}
 
 	@Override
 	public void update() {
 
+		// Zero encoder
+
 		if(fTimer.isDone())
 		{
 			fSharedInputValues.setBoolean("ipb_elevator_has_been_zeroed", true);
+			fSharedOutputValues.setNumeric("opn_elevator", "percent", 0);
+			fSharedInputValues.setNumeric("ipn_elevator_height", 1);
 		}
 	}
 

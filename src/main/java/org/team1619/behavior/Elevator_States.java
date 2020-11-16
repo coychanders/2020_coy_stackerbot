@@ -40,7 +40,7 @@ public class Elevator_States implements Behavior {
 
 		elevatorHeight = config.getDouble("elevator_height");
 
-		fSharedOutputValues.setNumeric("opb_elevator", "position", elevatorHeight);
+		fSharedOutputValues.setNumeric("opn_elevator", "position", elevatorHeight);
 
 		fTimer.start(1000);
 
@@ -59,10 +59,9 @@ public class Elevator_States implements Behavior {
 	@Override
 	public boolean isDone() {
 		if(fTimer.isDone()){
-			fSharedInputValues.setNumeric("ipn_elevator_height", elevatorHeight);
-			fSharedInputValues.setNumeric("ipn_elevator_position", elevatorHeight.intValue() +1);
+			fSharedInputValues.setNumeric("ipn_elevator_height", elevatorHeight.intValue() +1);
 			return true;
-		};
+		}
 		return false;
 	}
 

@@ -101,80 +101,70 @@ sequencer_state:
 #  sq_back_to_front:
 #    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front]
 
-  #  When starting in the front, go to the 4 default positions (operator left/right trigger/bumper)
-  sq_front_out_front:
-    sequence: [st_elevator_height2, st_arm_out_front]
-  sq_front_protect_front:
+  sq_front_to_h2_front_protect:
     sequence: [st_elevator_height2, st_arm_protect_front]
-  sq_front_protect_back:
+  sq_front_to_h2_back_protect:
     sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height2]
-  sq_front_out_back:
-    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height2, st_arm_out_back]
-
-  # When starting in the back, go to the 4 default positions (operator left/right trigger/bumper)
-  sq_back_out_back:
-    sequence: [st_elevator_height2, st_arm_out_back]
-  sq_back_protect_back:
+  sq_back_to_h2_back_protect:
     sequence: [st_elevator_height2, st_arm_protect_back]
-  sq_back_protect_front:
+  sq_back_to_h2_front_protect:
     sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2]
-  sq_back_out_front:
+
+
+
+  sq_front_to_h1_front_out:
+    sequence: [st_elevator_height1, st_arm_out_front]
+  sq_front_to_h2_front_out:
+    sequence: [st_elevator_height2, st_arm_out_front]
+  sq_front_to_h3_front_out:
+    sequence: [st_elevator_height3, st_arm_out_front]
+  sq_front_to_h4_front_out:
+    sequence: [st_elevator_height4, st_arm_out_front]
+  sq_front_to_h5_front_out:
+    sequence: [st_elevator_height5, st_arm_out_front]
+  sq_front_to_h6_front_out:
+    sequence: [st_elevator_height6, st_arm_out_front]
+
+  sq_front_to_h1_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height1, st_arm_out_back]
+  sq_front_to_h2_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height2, st_arm_out_back]
+  sq_front_to_h3_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height3, st_arm_out_back]
+  sq_front_to_h4_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height4, st_arm_out_back]
+  sq_front_to_h5_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height5, st_arm_out_back]
+  sq_front_to_h6_back_out:
+    sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back, st_elevator_height6, st_arm_out_back]
+
+
+  sq_back_to_h1_back_out:
+    sequence: [st_elevator_height1, st_arm_out_back]
+  sq_back_to_h2_back_out:
+    sequence: [st_elevator_height2, st_arm_out_back]
+  sq_back_to_h3_back_out:
+    sequence: [st_elevator_height3, st_arm_out_back]
+  sq_back_to_h4_back_out:
+    sequence: [st_elevator_height4, st_arm_out_back]
+  sq_back_to_h5_back_out:
+    sequence: [st_elevator_height5, st_arm_out_back]
+  sq_back_to_h6_back_out:
+    sequence: [st_elevator_height6, st_arm_out_back]
+
+  sq_back_to_h1_front_out:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height1, st_arm_out_front]
+  sq_back_to_h2_front_out:
     sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height2, st_arm_out_front]
+  sq_back_to_h3_front_out:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height3, st_arm_out_front]
+  sq_back_to_h4_front_out:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height4, st_arm_out_front]
+  sq_back_to_h5_front_out:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height5, st_arm_out_front]
+  sq_back_to_h6_front_out:
+    sequence: [st_arm_protect_back, st_elevator_height6, st_arm_protect_front, st_elevator_height6, st_arm_out_front]
 
-  # When starting out in front and changing the height
-  sq_front_h1_out_front:
-    sequence: [st_elevator_height1]
-  sq_front_h2_out_front:
-    sequence: [st_elevator_height2]
-  sq_front_h3_out_front:
-    sequence: [st_elevator_height3]
-  sq_front_h4_out_front:
-    sequence: [st_elevator_height4]
-  sq_front_h5_out_front:
-    sequence: [st_elevator_height5]
-  sq_front_h6_out_front:
-    sequence: [st_elevator_height6]
 
-  #  When starting in protect in front, changing the height, and then going to out in back
-  sq_front_h1_out_back:
-    sequence: [sq_front_to_back, st_elevator_height1,  st_arm_out_front]
-  sq_front_h2_out_back:
-    sequence: [sq_front_to_back, st_elevator_height2,  st_arm_out_front]
-  sq_front_h3_out_back:
-    sequence: [sq_front_to_back, st_elevator_height3,  st_arm_out_front]
-  sq_front_h4_out_back:
-    sequence: [sq_front_to_back, st_elevator_height4,  st_arm_out_front]
-  sq_front_h5_out_back:
-    sequence: [sq_front_to_back, st_elevator_height5,  st_arm_out_front]
-  sq_front_h6_out_back:
-    sequence: [sq_front_to_back, st_elevator_height6,  st_arm_out_front]
-
-  # When starting out in back and changing the height
-  sq_back_h1_out_back:
-    sequence: [st_elevator_height1]
-  sq_back_h2_out_back:
-    sequence: [st_elevator_height2]
-  sq_back_h3_out_back:
-    sequence: [st_elevator_height3]
-  sq_back_h4_out_back:
-    sequence: [st_elevator_height4]
-  sq_back_h5_out_back:
-    sequence: [st_elevator_height5]
-  sq_back_h6_out_back:
-    sequence: [st_elevator_height6]
-
-  #  When starting in protect in back, changing the height, and then going to out in front
-  sq_back_h1_out_front:
-    sequence: [sq_back_to_front, st_elevator_height1,  st_arm_out_back]
-  sq_back_h2_out_front:
-    sequence: [sq_back_to_front, st_elevator_height2,  st_arm_out_back]
-  sq_back_h3_out_front:
-    sequence: [sq_back_to_front, st_elevator_height3,  st_arm_out_back]
-  sq_back_h4_out_front:
-    sequence: [sq_back_to_front, st_elevator_height4,  st_arm_out_back]
-  sq_back_h5_out_front:
-    sequence: [sq_back_to_front, st_elevator_height5,  st_arm_out_back]
-  sq_back_h6_out_front:
-    sequence: [sq_back_to_front, st_elevator_height6,  st_arm_out_back]
 
 

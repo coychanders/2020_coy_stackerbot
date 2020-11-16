@@ -38,7 +38,7 @@ public class Arm_Zero implements Behavior {
 	public void initialize(String stateName, Config config) {
 		sLogger.debug("Entering state {}", stateName);
 
-		fSharedOutputValues.setNumeric("opn_arm", "percent", -0.1);
+		fSharedOutputValues.setNumeric("opn_arm", "percent", 0.1);
 
 		fTimer.start(fZero_Timeout);
 	}
@@ -47,11 +47,14 @@ public class Arm_Zero implements Behavior {
 	public void update() {
 
 		// Zero encoder
+		// Check that it is zerod
 
 		if(fTimer.isDone())
 		{
 			fSharedInputValues.setBoolean("ipb_arm_has_been_zeroed", true);
-			fSharedOutputValues.setNumeric("opn_arm", "position", 0);
+			fSharedOutputValues.setNumeric("opn_arm", "percent", 0);
+			fSharedInputValues.setString("ips_arm_facing", "front");
+			fSharedInputValues.setString("ips_arm_position", "out");
 		}
 	}
 

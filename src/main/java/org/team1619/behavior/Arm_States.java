@@ -59,8 +59,18 @@ public class Arm_States implements Behavior {
 	@Override
 	public boolean isDone() {
 		if(fTimer.isDone()){
-			fSharedInputValues.setBoolean("ipb_arm_out", ((armAngle < 40) || (armAngle > 140)));
-			fSharedInputValues.setBoolean("ipb_arm_front", (armAngle < 90));
+			if(armAngle <= 90)
+			{
+				fSharedInputValues.setString("ips_arm_facing", "front");
+			}else {
+				fSharedInputValues.setString("ips_arm_facing", "back");
+			}
+			if((armAngle < 40) || (armAngle > 140))
+			{
+				fSharedInputValues.setString("ips_arm_position", "out");
+			}else {
+				fSharedInputValues.setString("ips_arm_position", "protect");
+			}
 			return true;
 		}
 		return false;

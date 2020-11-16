@@ -5,10 +5,11 @@ general:
   states:
 
     sequences:
-      priority_level_1: [sq_front_out_front, sq_front_protect_front, sq_front_protect_back, sq_front_out_back,
-                         sq_back_out_back, sq_back_protect_back, sq_back_protect_front, sq_back_out_front,
-                         sq_front_h1_out_front, sq_front_h2_out_front, sq_front_h3_out_front, sq_front_h4_out_front, sq_front_h5_out_front, sq_front_h6_out_front,
-                         sq_back_h1_out_back, sq_back_h2_out_back, sq_back_h3_out_back, sq_back_h4_out_back, sq_back_h5_out_back, sq_back_h6_out_back]
+      priority_level_1: [sq_front_to_h2_front_protect, sq_front_to_h2_back_protect, sq_back_to_h2_back_protect, sq_back_to_h2_front_protect,
+                         sq_front_to_h1_front_out, sq_front_to_h2_front_out, sq_front_to_h3_front_out, sq_front_to_h4_front_out,sq_front_to_h5_front_out, sq_front_to_h6_front_out,
+                         sq_front_to_h1_back_out,  sq_front_to_h2_back_out, sq_front_to_h3_back_out, sq_front_to_h4_back_out, sq_front_to_h5_back_out, sq_front_to_h6_back_out,
+                         sq_back_to_h1_back_out, sq_back_to_h2_back_out, sq_back_to_h3_back_out, sq_back_to_h4_back_out, sq_back_to_h5_back_out, sq_back_to_h6_back_out,
+                         sq_back_to_h1_front_out, sq_back_to_h2_front_out, sq_back_to_h3_front_out, sq_back_to_h4_front_out, sq_back_to_h5_front_out, sq_back_to_h6_front_out]
     parallels:
        priority_level_1: []
     ss_drivetrain:

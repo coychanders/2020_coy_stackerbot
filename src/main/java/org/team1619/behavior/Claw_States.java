@@ -27,6 +27,8 @@ public class Claw_States implements Behavior {
 	public Claw_States(InputValues inputValues, OutputValues outputValues, Config config, RobotConfiguration robotConfiguration) {
 		fSharedInputValues = inputValues;
 		fSharedOutputValues = outputValues;
+
+		fSharedOutputValues.setBoolean("opb_claw", true);
 	}
 
 	@Override
