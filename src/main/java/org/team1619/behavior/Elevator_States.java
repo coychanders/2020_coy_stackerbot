@@ -23,14 +23,15 @@ public class Elevator_States implements Behavior {
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
 
+	private final String fElevatorAdjustID;
 	private final Timer fTimer;
-
 	private Double elevatorHeight;
 
 	public Elevator_States(InputValues inputValues, OutputValues outputValues, Config config, RobotConfiguration robotConfiguration) {
 		fSharedInputValues = inputValues;
 		fSharedOutputValues = outputValues;
 
+		fElevatorAdjustID = robotConfiguration.getString("global_elevator", "elevator_adjust");
 		fTimer = new Timer();
 	}
 
@@ -39,9 +40,6 @@ public class Elevator_States implements Behavior {
 		sLogger.debug("Entering state {}", stateName);
 
 		elevatorHeight = config.getDouble("elevator_height");
-
-		fSharedOutputValues.setNumeric("opn_elevator", "position", elevatorHeight);
-
 		fTimer.start(1000);
 
 	}
@@ -49,6 +47,11 @@ public class Elevator_States implements Behavior {
 	@Override
 	public void update() {
 
+		double elevatorAdjust = fSharedInputValues.getNumeric(fElevatorAdjustID);
+		elevatorHeight += elevatorAdjust/100;
+		elevatorHeight = Math.max(elevatorHeight, 0.5);
+		elevatorHeight = Math.min(elevatorHeight, 6.5);
+		fSharedOutputValues.setNumeric("opn_elevator", "position", elevatorHeight);
 	}
 
 	@Override
@@ -58,6 +61,9 @@ public class Elevator_States implements Behavior {
 
 	@Override
 	public boolean isDone() {
+
+		// Simulates the time for the elevator to move. Then updates a way to track where it is
+		// Would probably use the encoder in real life
 		if(fTimer.isDone()){
 			fSharedInputValues.setNumeric("ipn_elevator_height", elevatorHeight.intValue() +1);
 			return true;

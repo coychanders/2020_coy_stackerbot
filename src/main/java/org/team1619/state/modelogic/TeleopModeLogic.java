@@ -58,6 +58,8 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public void update() {
 
+		//Todo - Is there a better way to do this?
+		// This causes a specific sequence to run right after the robot has been zeroed to put the robot into the right position
 		if(mFirstCommand){
 			if(fSharedInputValues.getBoolean("ipb_robot_has_been_zeroed")){
 				mFirstCommand = false;
@@ -129,7 +131,7 @@ public class TeleopModeLogic extends AbstractModeLogic {
 	@Override
 	public boolean isReady(String name) {
 
-		// Create the sequence that should be true in this frame
+		// Create the sequence name that should be true in this frame
 		String command = "sq_" + mCurrentArmFacing + "_to_h" + mRequestedElevatorHeight + "_" + mRequestedArmFacing + "_" + mRequestedArmPosition;
 		if(name.equals(command) && mNewCommand){
 			return true;

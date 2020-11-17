@@ -5,7 +5,8 @@ general:
   states:
 
     sequences:
-      priority_level_1: [sq_front_to_h2_front_protect, sq_front_to_h2_back_protect, sq_back_to_h2_back_protect, sq_back_to_h2_front_protect,
+      priority_level_1: [sq_front_to_back, sq_back_to_front,
+                         sq_front_to_h2_front_protect, sq_front_to_h2_back_protect, sq_back_to_h2_back_protect, sq_back_to_h2_front_protect,
                          sq_front_to_h1_front_out, sq_front_to_h2_front_out, sq_front_to_h3_front_out, sq_front_to_h4_front_out,sq_front_to_h5_front_out, sq_front_to_h6_front_out,
                          sq_front_to_h1_back_out,  sq_front_to_h2_back_out, sq_front_to_h3_back_out, sq_front_to_h4_back_out, sq_front_to_h5_back_out, sq_front_to_h6_back_out,
                          sq_back_to_h1_back_out, sq_back_to_h2_back_out, sq_back_to_h3_back_out, sq_back_to_h4_back_out, sq_back_to_h5_back_out, sq_back_to_h6_back_out,
@@ -52,6 +53,12 @@ global_timing:
 
 global_all:
   zero_timeout: 1000
+
+global_arm:
+  arm_adjust: ipn_operator_right_y
+
+global_elevator:
+  elevator_adjust: ipn_operator_left_y
 
 log:
 #  ips_selected_auto: true

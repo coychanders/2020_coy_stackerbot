@@ -94,7 +94,6 @@ parallel_state:
 
 sequencer_state:
 
-#todo why does this not work?
   #  Base sequences used in other sequences below
   sq_front_to_back:
     sequence: [st_arm_protect_front, st_elevator_height6, st_arm_protect_back]
